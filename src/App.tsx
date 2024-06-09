@@ -20,20 +20,22 @@ function App() {
     setTodos([...todos, todo])
   }
 
-  function handleComplete(index: number) {
-    setTodos(todos.map((todo, i) => {
-      if (i === index) {
-        return { ...todo, completed: !todo.completed }
-      }
-      return todo
-    }))
+  function handleComplete(todo: ToDo) {
+    const index = todos.findIndex(t => t.timestamp === todo.timestamp)
+    const newTodos = [...todos]
+    newTodos[index] = { ...todo, completed: !todo.completed }
+    setTodos(newTodos)
   }
 
   return (
-    <div>
+    <div className="container mx-auto">
       <Header />
       <AddToDo onAdd={handleAdd} />
-      <ToDoList todos={todos} onComplete={handleComplete} />
+      <ToDoList
+        className="mt-4"
+        todos={todos}
+        onComplete={handleComplete}
+      />
     </div>
   )
 }

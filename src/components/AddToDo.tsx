@@ -1,4 +1,5 @@
 import { useId } from 'react'
+import { Input } from '@nextui-org/react'
 import type { ToDo } from '../types.ts'
 
 interface AddToDoProps {
@@ -15,18 +16,19 @@ export function AddToDo({ onAdd }: AddToDoProps) {
       onAdd({
         text: toDo,
         completed: false,
-        key: new Date().getTime(),
+        timestamp: new Date().getTime(),
       })
       input.value = ''
     }
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="toDo">To Do:</label>
-      <input type="text" id={inputId} />
-
-      <button type="submit">Add</button>
+    <form onSubmit={handleSubmit} className="flex">
+      <Input
+        type="text"
+        id={inputId}
+        placeholder="what do you need to do?"
+      />
     </form>
   )
 }

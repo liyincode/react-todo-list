@@ -1,3 +1,4 @@
+import { Checkbox } from '@nextui-org/react'
 import type { ToDo } from '../types.ts'
 
 interface ToDoItemProps {
@@ -7,13 +8,18 @@ interface ToDoItemProps {
 
 export function ToDoItem({ todo, onComplete }: ToDoItemProps) {
   return (
-    <li key={todo.key}>
-      {todo.text}
-      <input
-        type="checkbox"
-        defaultChecked={todo.completed}
-        onInput={onComplete}
-      />
-    </li>
+    <div className="flex justify-between">
+      <Checkbox
+        key={todo.timestamp}
+        defaultSelected={todo.completed}
+        lineThrough={todo.completed}
+        onChange={onComplete}
+      >
+        {todo.text}
+      </Checkbox>
+      <p>
+        {new Date(todo.timestamp).toLocaleString()}
+      </p>
+    </div>
   )
 }

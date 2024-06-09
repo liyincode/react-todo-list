@@ -1,5 +1,5 @@
 export interface ToDo {
   text: string
   completed: boolean
-  key: number
+  timestamp: number
 }
