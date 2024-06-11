@@ -1,7 +1,7 @@
 import { Divider } from '@nextui-org/react'
 import { useContext, useMemo } from 'react'
 import type { ToDo } from '../types'
-import { TodosContext } from '../todosContext.ts'
+import { TodosContext } from '../todosContext.tsx'
 import { ToDoItem } from './ToDoItem.tsx'
 
 interface ToDoListProps {

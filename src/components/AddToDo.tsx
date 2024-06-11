@@ -1,6 +1,6 @@
-import {useContext, useId, useRef, useState} from 'react'
+import { useContext, useId, useRef, useState } from 'react'
 import { Input } from '@nextui-org/react'
-import {TodosDispatchContext} from "../todosContext.ts";
+import { TodosDispatchContext } from '../todosContext.tsx'
 
 export function AddToDo() {
   const [inputValue, setInputValue] = useState('')
@@ -24,8 +24,8 @@ export function AddToDo() {
             completed: false,
             date: new Date(),
             id: Math.random().toString(36).substring(2, 9),
-          }
-        }
+          },
+        },
       )
       setInputValue('')
     }

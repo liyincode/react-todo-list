@@ -1,13 +1,13 @@
 import { Button, Checkbox } from '@nextui-org/react'
+import { useContext } from 'react'
 import type { ToDo } from '../types.ts'
-import {TodosDispatchContext} from "../todosContext.ts";
-import {useContext} from "react";
+import { TodosDispatchContext } from '../todosContext.tsx'
 
 interface ToDoItemProps {
   todo: ToDo
 }
 
-export function ToDoItem({ todo  }: ToDoItemProps) {
+export function ToDoItem({ todo }: ToDoItemProps) {
   const dispatch = useContext(TodosDispatchContext)
 
   function handleComplete(id: string) {
@@ -16,7 +16,7 @@ export function ToDoItem({ todo  }: ToDoItemProps) {
         type: 'TOGGLE_TODO',
         payload: {
           id,
-        }
+        },
       })
     }
   }
@@ -27,7 +27,7 @@ export function ToDoItem({ todo  }: ToDoItemProps) {
         type: 'REMOVE_TODO',
         payload: {
           id,
-        }
+        },
       })
     }
   }
