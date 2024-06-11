@@ -3,18 +3,18 @@ import type { ToDo } from '../types.ts'
 
 interface ToDoItemProps {
   todo: ToDo
-  onComplete: () => void
-  onRemove: () => void
+  onComplete: (id: string) => void
+  onRemove: (id: string) => void
 }
 
 export function ToDoItem({ todo, onComplete, onRemove }: ToDoItemProps) {
   return (
     <div className="flex justify-between">
       <Checkbox
-        key={todo.timestamp}
+        key={todo.id}
         defaultSelected={todo.completed}
         lineThrough={todo.completed}
-        onChange={onComplete}
+        onChange={() => onComplete(todo.id)}
       >
         {todo.text}
       </Checkbox>
@@ -23,12 +23,12 @@ export function ToDoItem({ todo, onComplete, onRemove }: ToDoItemProps) {
           color="danger"
           variant="light"
           size="sm"
-          onClick={onRemove}
+          onClick={() => onRemove(todo.id)}
         >
           Remove
         </Button>
         <p className="flex items-center">
-          {new Date(todo.timestamp).toLocaleString()}
+          {new Date(todo.date).toLocaleString()}
         </p>
       </div>
     </div>

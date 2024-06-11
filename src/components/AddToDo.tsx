@@ -1,4 +1,4 @@
-import { useId } from 'react'
+import { useId, useRef, useState } from 'react'
 import { Input } from '@nextui-org/react'
 import type { ToDo } from '../types.ts'
 
@@ -6,19 +6,25 @@ interface AddToDoProps {
   onAdd: (toDo: ToDo) => void
 }
 export function AddToDo({ onAdd }: AddToDoProps) {
+  const [inputValue, setInputValue] = useState('')
   const inputId = useId()
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault()
-    const input = document.getElementById(inputId) as HTMLInputElement
-    const toDo = input.value.trim()
-    if (toDo) {
+    if (!inputRef.current) {
+      return
+    }
+
+    const todo = inputRef.current.value.trim()
+    if (todo) {
       onAdd({
-        text: toDo,
+        text: todo,
         completed: false,
-        timestamp: new Date().getTime(),
+        date: new Date(),
+        id: Math.random().toString(36).substring(2, 9),
       })
-      input.value = ''
+      setInputValue('')
     }
   }
 
@@ -26,8 +32,11 @@ export function AddToDo({ onAdd }: AddToDoProps) {
     <form onSubmit={handleSubmit} className="flex">
       <Input
         type="text"
+        value={inputValue}
         id={inputId}
+        ref={inputRef}
         placeholder="what do you need to do?"
+        onChange={event => setInputValue(event.target.value)}
       />
     </form>
   )

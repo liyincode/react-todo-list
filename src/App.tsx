@@ -20,15 +20,17 @@ function App() {
     setTodos([...todos, todo])
   }
 
-  function handleComplete(todo: ToDo) {
-    const index = todos.findIndex(t => t.timestamp === todo.timestamp)
-    const newTodos = [...todos]
-    newTodos[index] = { ...todo, completed: !todo.completed }
-    setTodos(newTodos)
+  function handleComplete(id: string) {
+    setTodos(todos.map((todo) => {
+      if (todo.id === id) {
+        return { ...todo, completed: !todo.completed }
+      }
+      return todo
+    }))
   }
 
-  function handleRemove(todo: ToDo) {
-    setTodos(todos.filter(t => t.timestamp !== todo.timestamp))
+  function handleRemove(id: string) {
+    setTodos(todos.filter(todo => todo.id !== id))
   }
 
   return (
