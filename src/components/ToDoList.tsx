@@ -1,21 +1,31 @@
 import { Divider } from '@nextui-org/react'
-import { useMemo } from 'react'
+import { useContext, useMemo } from 'react'
 import type { ToDo } from '../types'
+import { TodosContext } from '../todosContext.ts'
 import { ToDoItem } from './ToDoItem.tsx'
 
 interface ToDoListProps {
-  todos: ToDo[]
-  onComplete: (id: string) => void
-  onRemove: (id: string) => void
   className?: string
 }
 
-export function ToDoList({ todos, onComplete, onRemove, className }: ToDoListProps) {
+export function ToDoList({ className }: ToDoListProps) {
+  const todos = useContext(TodosContext)
   const { completedTodos, uncompletedTodos } = useMemo(
     () => {
+      if (!todos) {
+        return {
+          completedTodos: [],
+          uncompletedTodos: [],
+        }
+      }
+
       const completedTodos = todos.filter(todo => todo.completed)
       const uncompletedTodos = todos.filter(todo => !todo.completed)
-      return { completedTodos, uncompletedTodos }
+
+      return {
+        completedTodos,
+        uncompletedTodos,
+      }
     },
     [todos],
   )
@@ -39,8 +49,6 @@ export function ToDoList({ todos, onComplete, onRemove, className }: ToDoListPro
           <ToDoItem
             key={todo.id}
             todo={todo}
-            onComplete={onComplete}
-            onRemove={onRemove}
           />
         ))}
       </>

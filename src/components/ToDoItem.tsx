@@ -1,20 +1,44 @@
 import { Button, Checkbox } from '@nextui-org/react'
 import type { ToDo } from '../types.ts'
+import {TodosDispatchContext} from "../todosContext.ts";
+import {useContext} from "react";
 
 interface ToDoItemProps {
   todo: ToDo
-  onComplete: (id: string) => void
-  onRemove: (id: string) => void
 }
 
-export function ToDoItem({ todo, onComplete, onRemove }: ToDoItemProps) {
+export function ToDoItem({ todo  }: ToDoItemProps) {
+  const dispatch = useContext(TodosDispatchContext)
+
+  function handleComplete(id: string) {
+    if (dispatch) {
+      dispatch({
+        type: 'TOGGLE_TODO',
+        payload: {
+          id,
+        }
+      })
+    }
+  }
+
+  function handleRemove(id: string) {
+    if (dispatch) {
+      dispatch({
+        type: 'REMOVE_TODO',
+        payload: {
+          id,
+        }
+      })
+    }
+  }
+
   return (
     <div className="flex justify-between">
       <Checkbox
         key={todo.id}
         defaultSelected={todo.completed}
         lineThrough={todo.completed}
-        onChange={() => onComplete(todo.id)}
+        onChange={() => handleComplete(todo.id)}
       >
         {todo.text}
       </Checkbox>
@@ -23,7 +47,7 @@ export function ToDoItem({ todo, onComplete, onRemove }: ToDoItemProps) {
           color="danger"
           variant="light"
           size="sm"
-          onClick={() => onRemove(todo.id)}
+          onClick={() => handleRemove(todo.id)}
         >
           Remove
         </Button>

@@ -1,14 +1,12 @@
-import { useId, useRef, useState } from 'react'
+import {useContext, useId, useRef, useState} from 'react'
 import { Input } from '@nextui-org/react'
-import type { ToDo } from '../types.ts'
+import {TodosDispatchContext} from "../todosContext.ts";
 
-interface AddToDoProps {
-  onAdd: (toDo: ToDo) => void
-}
-export function AddToDo({ onAdd }: AddToDoProps) {
+export function AddToDo() {
   const [inputValue, setInputValue] = useState('')
   const inputId = useId()
   const inputRef = useRef<HTMLInputElement>(null)
+  const dispatch = useContext(TodosDispatchContext)
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault()
@@ -17,13 +15,18 @@ export function AddToDo({ onAdd }: AddToDoProps) {
     }
 
     const todo = inputRef.current.value.trim()
-    if (todo) {
-      onAdd({
-        text: todo,
-        completed: false,
-        date: new Date(),
-        id: Math.random().toString(36).substring(2, 9),
-      })
+    if (todo && dispatch) {
+      dispatch(
+        {
+          type: 'ADD_TODO',
+          payload: {
+            text: todo,
+            completed: false,
+            date: new Date(),
+            id: Math.random().toString(36).substring(2, 9),
+          }
+        }
+      )
       setInputValue('')
     }
   }
