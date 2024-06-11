@@ -1,12 +1,13 @@
-import { Checkbox } from '@nextui-org/react'
+import { Button, Checkbox } from '@nextui-org/react'
 import type { ToDo } from '../types.ts'
 
 interface ToDoItemProps {
   todo: ToDo
-  onComplete: (event: React.FormEvent<HTMLInputElement>) => void
+  onComplete: () => void
+  onRemove: () => void
 }
 
-export function ToDoItem({ todo, onComplete }: ToDoItemProps) {
+export function ToDoItem({ todo, onComplete, onRemove }: ToDoItemProps) {
   return (
     <div className="flex justify-between">
       <Checkbox
@@ -17,9 +18,19 @@ export function ToDoItem({ todo, onComplete }: ToDoItemProps) {
       >
         {todo.text}
       </Checkbox>
-      <p>
-        {new Date(todo.timestamp).toLocaleString()}
-      </p>
+      <div className="flex gap-1">
+        <Button
+          color="danger"
+          variant="light"
+          size="sm"
+          onClick={onRemove}
+        >
+          Remove
+        </Button>
+        <p className="flex items-center">
+          {new Date(todo.timestamp).toLocaleString()}
+        </p>
+      </div>
     </div>
   )
 }

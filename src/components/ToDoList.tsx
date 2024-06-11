@@ -5,12 +5,17 @@ import { ToDoItem } from './ToDoItem.tsx'
 interface ToDoListProps {
   todos: ToDo[]
   onComplete: (todo: ToDo) => void
+  onRemove: (todo: ToDo) => void
   className?: string
 }
 
-export function ToDoList({ todos, onComplete, className }: ToDoListProps) {
-  const handleComplete = (todo: ToDo) => () => {
+export function ToDoList({ todos, onComplete, onRemove, className }: ToDoListProps) {
+  function handleComplete(todo: ToDo) {
     onComplete(todo)
+  }
+
+  function handleRemove(todo: ToDo) {
+    onRemove(todo)
   }
 
   return (
@@ -29,7 +34,8 @@ export function ToDoList({ todos, onComplete, className }: ToDoListProps) {
           <ToDoItem
             key={todo.timestamp}
             todo={todo}
-            onComplete={handleComplete(todo)}
+            onComplete={() => handleComplete(todo)}
+            onRemove={() => handleRemove(todo)}
           />
         ))}
 
@@ -47,7 +53,8 @@ export function ToDoList({ todos, onComplete, className }: ToDoListProps) {
           <ToDoItem
             key={todo.timestamp}
             todo={todo}
-            onComplete={handleComplete(todo)}
+            onComplete={() => handleComplete(todo)}
+            onRemove={() => handleRemove(todo)}
           />
         ))}
     </div>

@@ -27,6 +27,10 @@ function App() {
     setTodos(newTodos)
   }
 
+  function handleRemove(todo: ToDo) {
+    setTodos(todos.filter(t => t.timestamp !== todo.timestamp))
+  }
+
   return (
     <div className="container mx-auto">
       <Header />
@@ -35,6 +39,7 @@ function App() {
         className="mt-4"
         todos={todos}
         onComplete={handleComplete}
+        onRemove={handleRemove}
       />
     </div>
   )
