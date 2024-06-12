@@ -1,4 +1,4 @@
-import {createContext, useEffect, useReducer} from 'react'
+import { createContext, useEffect, useReducer } from 'react'
 import type { Action, ToDo } from './types.ts'
 
 type Dispatch = (action: Action) => void
@@ -39,7 +39,7 @@ function todosReducer(todos: ToDo[] = [], action: Action) {
     case 'ADD_TODO':
       return [
         ...todos,
-         action.payload,
+        action.payload,
       ]
     case 'TOGGLE_TODO':
       return todos.map((todo) => {
